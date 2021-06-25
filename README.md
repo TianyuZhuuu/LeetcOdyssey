@@ -7,6 +7,9 @@ Notes on solutions of some classic problem from Leetcode
   - [Reverse Linked List](#reverse-linked-list)
 - [Tree](#tree)
   - [Traversal](#traversal)
+    - [Preorder Traversal](#preorder-traversal)
+    - [Inorder Traversal](#inorder-traversal)
+    - [Postorder Traversal](#postorder-traversal)
     - [Level Order Traversal](#level-order-traversal)
 
 # Linked List
@@ -50,17 +53,69 @@ public ListNode reverseList(ListNode head) {
 
 # Tree
 ## Traversal
-## Level Order Traversal
-- Description:
 
-Given the `root` of a binary tree, return the level order traversal of its nodes' values. (i.e., from left to right, level by level).
-
-- Example:
+### Preorder Traversal
+- Code:
+```java
+public List<Integer> preorderTraversal(TreeNode root) {
+    List<Integer> res = new ArrayList<>();
+    if (root == null) return res;
+    Deque<TreeNode> stack = new ArrayDeque<>();
+    stack.offerLast(root);
+    while (!stack.isEmpty()) {
+        TreeNode node = stack.pollLast();
+        res.add(node.val);
+        if (node.right != null) stack.offerLast(node.right);
+        if (node.left != null) stack.offerLast(node.left);
+    }
+    return res;
+}
 ```
-Input: root = [3,9,20,null,null,15,7]
-Output: [[3],[9,20],[15,7]]
+
+### Inorder Traversal
+- Code:
+```java
+public void populate(Deque<TreeNode> stack, TreeNode node) {
+    while (node != null) {
+        stack.offerLast(node);
+        node = node.left;
+    }
+}
+
+public List<Integer> inorderTraversal(TreeNode root) {
+    List<Integer> res = new ArrayList<>();
+    if (root == null) return res;
+    Deque<TreeNode> stack = new ArrayDeque<>();
+    populate(stack, root);
+    while (!stack.isEmpty()) {
+        TreeNode node = stack.pollLast();
+        res.add(node.val);
+        populate(stack, node.right);
+    }
+    return res;
+}
 ```
 
+### Postorder Traversal
+- Code:
+```java
+public List<Integer> postorderTraversal(TreeNode root) {
+    List<Integer> res = new ArrayList<>();
+    if (root == null) return res;
+    Deque<TreeNode> stack = new ArrayDeque<>();
+    stack.offerLast(root);
+    while (!stack.isEmpty()) {
+        TreeNode node = stack.pollLast();
+        res.add(node.val);
+        if (node.left != null) stack.offerLast(node.left);
+        if (node.right != null) stack.offerLast(node.right);
+    }
+    Collections.reverse(res);
+    return res;
+}
+```
+
+### Level Order Traversal
 - Code:
 ```java
 public List<List<Integer>> levelOrder(TreeNode root) {
