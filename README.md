@@ -15,19 +15,20 @@ Notes on solutions of some classic problem from Leetcode
 
 # Linked List
 ## Remove Nth Node From End of List
+Leetcode 19: https://leetcode.com/problems/remove-nth-node-from-end-of-list/
 ```java
 class Solution {
     public ListNode removeNthFromEnd(ListNode head, int n) {
         ListNode dummy = new ListNode(0), slow = dummy, fast = dummy;
         dummy.next = head;
-        
+        // a total of n nodes in the gap between slow and fast
         for (int i = 0; i < n + 1; i++) fast = fast.next;
-        
+        // maintain the gap
         while (fast != null) {
             slow = slow.next;
             fast = fast.next;
         }
-        
+        // skip the desired node
         slow.next = slow.next.next;
         return dummy.next;
     }
