@@ -4,6 +4,7 @@ Notes on solutions of some classic problem from Leetcode
 # Index
 
 - [Linked List](#linked-list)
+  - [Remove Nth Node From End of List](#remove-nth-node-from-end-of-list)
   - [Reverse Linked List](#reverse-linked-list)
 - [Tree](#tree)
   - [Traversal](#traversal)
@@ -13,6 +14,26 @@ Notes on solutions of some classic problem from Leetcode
     - [Level Order Traversal](#level-order-traversal)
 
 # Linked List
+## Remove Nth Node From End of List
+```java
+class Solution {
+    public ListNode removeNthFromEnd(ListNode head, int n) {
+        ListNode dummy = new ListNode(0), slow = dummy, fast = dummy;
+        dummy.next = head;
+        
+        for (int i = 0; i < n + 1; i++) fast = fast.next;
+        
+        while (fast != null) {
+            slow = slow.next;
+            fast = fast.next;
+        }
+        
+        slow.next = slow.next.next;
+        return dummy.next;
+    }
+}
+```
+
 ## Reverse Linked List
 - Description: 
 
